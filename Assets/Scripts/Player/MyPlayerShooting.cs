@@ -15,12 +15,19 @@ public class MyPlayerShooting : MonoBehaviour
 
     private float currentShootTime; // 当前时间间隔
 
+    // 开枪发射射线相关参数
+    private Ray shootRay;
+    private RaycastHit shootHit;
+    private LayerMask shootMask;
     private void Awake()
     {
         gunAudio = GetComponent<AudioSource>();
         gunLight = GetComponentInChildren<Light>();
         gunLine = GetComponentInChildren<LineRenderer>();
         gunParticle = GetComponentInChildren<ParticleSystem>();
+
+        // 设置射线的命中层
+        shootMask = LayerMask.GetMask("Enemy");
     }
     private void Update()
     {
@@ -53,7 +60,20 @@ public class MyPlayerShooting : MonoBehaviour
 
         //从枪口发射射线 获取射线命中的物体
         gunLine.SetPosition(0, transform.position);
-        gunLine.SetPosition(1, transform.position + transform.forward * 100);
+        //gunLine.SetPosition(1, transform.position + transform.forward * 100);
         gunLine.enabled = true;
+
+        // 发射射线 检测是否有物体被击中
+        shootRay.origin = transform.position;
+        shootRay.direction = transform.forward;
+
+        if (Physics.Raycast(shootRay, out shootHit, 100, shootMask))
+        {
+            gunLine.SetPosition(1, shootHit.point);
+        }
+        else
+        {
+            gunLine.SetPosition(1, transform.position + transform.forward * 100);
+        }
     }
 }
