@@ -70,6 +70,8 @@ public class MyPlayerShooting : MonoBehaviour
         if (Physics.Raycast(shootRay, out shootHit, 100, shootMask))
         {
             gunLine.SetPosition(1, shootHit.point);
+            MyEnemyHealth enemyHealth =  shootHit.collider.GetComponent<MyEnemyHealth>();
+            enemyHealth.TakeDamage(10, shootHit.point);
         }
         else
         {
