@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Ïà»úÒÆ¶¯
 public class CameraMove : MonoBehaviour
 {
     private GameObject player;
