@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class MyEnemyManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject EnemyPrefab;
+    public GameObject EnemyCreatePosition;
+
+    public float StartSpawnDelay = 0f;
+    public float SpawnDelay = 3f;
+    private void Start()
     {
-        
+        InvokeRepeating("SpawnEnemy", StartSpawnDelay, SpawnDelay);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SpawnEnemy()
     {
-        
+        GameObject enemy = Instantiate(EnemyPrefab, EnemyCreatePosition.transform.position, EnemyCreatePosition.transform.rotation);
     }
 }
